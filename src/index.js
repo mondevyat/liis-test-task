@@ -7,10 +7,14 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./store/reducers/rootReducer";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk";
+import createSagaMiddleware from "redux-saga";
+import { hotelsSaga } from "./store/saga/hotelsSaga";
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+export const sagaMiddleware = createSagaMiddleware()
+
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+
+sagaMiddleware.run(hotelsSaga)
 
 ReactDOM.render(
   <Provider store={store}>

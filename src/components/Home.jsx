@@ -9,8 +9,8 @@ import Radio from "../ui-kit/Radio";
 import Card from "./Card";
 import { pictures } from "../utils/picturesData";
 import { useDispatch, useSelector } from "react-redux";
-import { getHotels } from "../store/actions/hotels";
 import * as Loader from "react-loader-spinner";
+import { fetchHotels } from "../store/reducers/hotelsReducer";
 
 const Home = () => {
   const [favourites, setFavourites] = useState([]);
@@ -29,12 +29,12 @@ const Home = () => {
   useEffect(() => {
     if (!localStorage.getItem("SHC-user")) navigate("/login");
     else {
-      dispatch(getHotels());
+      dispatch(fetchHotels());
     }
   }, []);
 
   const searchHandler = (cityName, date, days, limit = 30) => {
-    dispatch(getHotels(cityName, date, days, limit));
+    dispatch(fetchHotels(cityName, date, days, limit));
   };
 
   const logout = () => {
